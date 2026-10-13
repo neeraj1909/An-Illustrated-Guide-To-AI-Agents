@@ -1,32 +1,22 @@
 import json
 import urllib.request
+from dataclasses import asdict 
 
 from agent import TinyAgent
+from llm import LLM
 
 
-# agent = TinyAgent()
-# output = agent.run("What is 2 + 2?")
-# print(f"{output}")
+llm = LLM(model="gemma4:e4b")
+agent = TinyAgent(llm=llm)
+output = agent.run("What is 2 + 2?")
 
+print(f"{output}")
 
-# prepare request
-data = json.dumps(
-    {
-        "model": "gemma3:4b",
-        "messages": [{"role": "user", "content": "Hi! How's life?"}]
-    }
-).encode("utf-8")
+print(agent.trajectory.runs)
 
-# post request
-req = urllib.request.Request(
-    url="http://localhost:11434/v1/chat/completions",
-    data=data,
-    headers={"Content-Type": "application/json"}
-)
+# # Re-initialize the LLM with the updated class
+# llm = LLM(model="gemma4:e4b")
 
-# parse response
-with urllib.request.urlopen(req) as response:
-    result = json.loads(response.read())
-    
-# print response
-print(result["choices"][0])
+# # Generate a `Response` dataclass
+# response = llm.generate([{"role": "user", "content": "Hi! How's life?"}])
+# print(json.dumps(asdict(response), indent=2, ensure_ascii=False))
