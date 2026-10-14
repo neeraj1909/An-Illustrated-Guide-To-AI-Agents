@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 from agent import TinyAgent
 from llm import LLM
-from memory import Memory
+from memory import Memory, TrimmingMemory
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
@@ -21,21 +21,13 @@ llm = LLM(
     api_key=os.getenv("OPENWEBUI_API_KEY", "no_key"),
 )
 
-memory = Memory()
-agent_with_memory = TinyAgent(llm=llm, memory=memory) 
+memory = TrimmingMemory()
+agent = TinyAgent(llm=llm, memory=memory)
 
-first_response = agent_with_memory.run("Hi! We are Maarten and Jay, authors of 'An Illustrated Guide to AI Agents'.")
-print(f"first_response: {first_response}")
+# Run some interactions
+response_1 = agent.run("Hi! I'm reading 'An Illustrated Guide to AI Agents'.")
+response_2 = agent.run("There are many flamingos in this book, why?")
+response_3 = agent.run("What is 1+1?")
+response_4 = agent.run("What is 2+2?")
 
-second_response = agent_with_memory.run("Hi! What are our names?")
-print(f"second_response: {second_response}") 
-
-print(f"Conversation history: {agent_with_memory.memory.get_messages()}") 
-print(f"Trajectory: {agent_with_memory.trajectory.runs}")
-
-# # Re-initialize the LLM with the updated class
-# llm = LLM(model="gemma4:e4b")
-
-# # Generate a `Response` dataclass
-# response = llm.generate([{"role": "user", "content": "Hi! How's life?"}])
-# print(json.dumps(asdict(response), indent=2, ensure_ascii=False))
+print(f"Trimmed Conversation: {agent.memory.get_messages()}")

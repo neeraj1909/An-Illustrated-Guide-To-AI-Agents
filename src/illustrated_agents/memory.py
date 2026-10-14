@@ -1,3 +1,6 @@
+from llm import LLM
+
+
 class Memory:
     """Simple memory module to store conversation history."""
     
@@ -20,4 +23,22 @@ class Memory:
     def get_messages(self) -> list[dict]:
         """Get all messages."""
         return self.messages
-    
+
+
+class TrimmingMemory(Memory):
+    """Memory that keeps only the last two user/assistant turns."""
+    def add(self, role: str, content: str, **kwargs) -> None:
+        # Add the new message first using the parent class (Memory)
+        super().add(role, content, **kwargs)
+        
+        # keep system message with most recent two turns (4 messages)
+        system = [
+            message for message in self.messages if message["role"] == "system"
+        ]
+        
+        turns = [
+            message for message in self.messages if message["role"] != "system"
+        ]
+        
+        self.messages = system + turns[-4:]
+                    
