@@ -41,4 +41,39 @@ class TrimmingMemory(Memory):
         ]
         
         self.messages = system + turns[-4:]
+        
+        
+class SummarizationMemory(Memory):
+    """Memory that compresses past turns into a running summary via an LLM."""
+    
+    def __init__(self, llm: LLM):
+        super().__init__()
+        self.llm = llm 
+        
+    def add(self, role: str, content: str, **kwargs) -> None:
+        # add new message first using the parent class
+        super().add(role, content, **kwargs)
+        
+        # after each completed turn, updated the running summary
+        if role == "assistant":
+            # split the existing summary from the new conversation turns
+            summary = ""
+            conversation = ""
+            
+            for message in self.messages:
+                if message["role"] == "system":
+                    summary = message["content"]
+                else:
+                    conversation += f"{message['role']}: {message['content']}\n"
                     
+            # add the LLM to extend the summary with the new conversation
+            prompt = f"""Update the summary with the new conversation.
+            
+                        Summary: {summary}
+                        
+                        Conversation: {conversation}
+                        
+                        Output the updated summary only."""
+                        
+            response = self.llm.generate([{"role": "user", "content": prompt}])
+            self.messages = [{"role": "system", "content": response.content}]

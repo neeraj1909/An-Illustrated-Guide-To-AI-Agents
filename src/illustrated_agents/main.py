@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 from agent import TinyAgent
 from llm import LLM
-from memory import Memory, TrimmingMemory
+from memory import Memory, TrimmingMemory, SummarizationMemory
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
@@ -21,13 +21,8 @@ llm = LLM(
     api_key=os.getenv("OPENWEBUI_API_KEY", "no_key"),
 )
 
-memory = TrimmingMemory()
+memory = SummarizationMemory(llm=llm)
 agent = TinyAgent(llm=llm, memory=memory)
 
-# Run some interactions
-response_1 = agent.run("Hi! I'm reading 'An Illustrated Guide to AI Agents'.")
-response_2 = agent.run("There are many flamingos in this book, why?")
-response_3 = agent.run("What is 1+1?")
-response_4 = agent.run("What is 2+2?")
-
-print(f"Trimmed Conversation: {agent.memory.get_messages()}")
+response = agent.run("Hi, my name is Sarah. Why are flamingos pink?") 
+print(f"Summarized Conversation: {agent.memory.get_messages()}") 
