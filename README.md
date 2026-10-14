@@ -1,11 +1,12 @@
 # An Illustrated Guide to AI Agents
 
-A small educational agent framework that sends a user task to an Ollama model through an OpenAI-compatible chat-completions endpoint.
+A small educational agent framework that sends a user task to an Ollama model through an OpenAI-compatible chat-completions endpoint. It also demonstrates LLM-backed conversation summarization and remote text embeddings.
 
 The current flow is:
 
 ```text
-main.py → TinyAgent → LLM → Open WebUI or Ollama → model
+main.py → TinyAgent → SummarizationMemory → LLM → Open WebUI or Ollama → model
+embeddings.py → EmbeddingModel → embeddings endpoint
 ```
 
 ## Requirements
@@ -41,9 +42,15 @@ Copy or edit the repository-level `.env` file:
 OPENWEBUI_API_KEY="sk-your-openwebui-api-key"
 OLLAMA_MODEL="exact-model-id"
 LLM_BASE_URL="http://100.86.159.44:38080/api"
+
+# Optional: used by embeddings.py
+OLLAMA_BASE_URL="http://100.86.159.44:11434/v1"
+OLLAMA_EMBEDDING_MODEL="embeddinggemma"
 ```
 
 `main.py` loads this file automatically. The `.env` file is excluded from Git, so do not commit it or share its contents.
+
+`embeddings.py` reads `OLLAMA_EMBEDDING_MODEL` and `OLLAMA_BASE_URL`. The latter should be the base URL before `/embeddings`; if it is not set, the module falls back to `LLM_BASE_URL`.
 
 ### Recommended: use Open WebUI
 
@@ -107,12 +114,25 @@ What is 2 + 2?
 
 and prints the model response together with the agent trajectory.
 
+The example uses `SummarizationMemory`, which replaces the accumulated conversation with a running system summary after each assistant response. `Memory` keeps the full conversation, while `TrimmingMemory` keeps the system message and the most recent two turns.
+
 Alternatively, run from the repository root with:
 
 ```bash
 source .venv/bin/activate
 PYTHONPATH=src python src/illustrated_agents/main.py
 ```
+
+## Generate an embedding
+
+Configure `OLLAMA_BASE_URL` and `OLLAMA_EMBEDDING_MODEL` in `.env`, then run:
+
+```bash
+source .venv/bin/activate
+PYTHONPATH=src python src/illustrated_agents/embeddings.py
+```
+
+The example sends `Dolphins are amazing!` to the configured embeddings endpoint and prints the returned vector dimensions and values.
 
 ## Project structure
 
@@ -124,6 +144,8 @@ PYTHONPATH=src python src/illustrated_agents/main.py
 │   └── illustrated_agents/
 │       ├── main.py              # Example entry point and configuration
 │       ├── agent.py             # TinyAgent orchestration
+│       ├── memory.py             # Full, trimmed, and summarized conversation memory
+│       ├── embeddings.py         # Remote text embedding client
 │       └── llm.py               # OpenAI-compatible HTTP client and trajectory types
 └── README.md
 ```
@@ -163,4 +185,4 @@ python -m pip install -r requirements.txt
 
 ## Development notes
 
-The code intentionally uses `urllib.request` instead of an SDK so the request/response flow remains visible for the educational examples. `TinyAgent` currently performs one LLM step and records it in `Trajectory`; memory, tools, and planning are placeholders for later chapters.
+The code intentionally uses `urllib.request` instead of an SDK so the request/response flow remains visible for the educational examples. `TinyAgent` currently performs one LLM step and records it in `Trajectory`. Memory strategies and embeddings are implemented as small, inspectable modules; tools and planning remain placeholders for later chapters.
