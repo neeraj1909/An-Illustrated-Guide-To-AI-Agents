@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 from agent import TinyAgent
 from llm import LLM
-
+from memory import Memory
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
@@ -20,12 +20,18 @@ llm = LLM(
     base_url=os.getenv("LLM_BASE_URL", "http://100.86.159.44:38080/api"),
     api_key=os.getenv("OPENWEBUI_API_KEY", "no_key"),
 )
-agent = TinyAgent(llm=llm)
-output = agent.run("What is 2 + 2?")
 
-print(f"{output}")
+memory = Memory()
+agent_with_memory = TinyAgent(llm=llm, memory=memory) 
 
-print(agent.trajectory.runs)
+first_response = agent_with_memory.run("Hi! We are Maarten and Jay, authors of 'An Illustrated Guide to AI Agents'.")
+print(f"first_response: {first_response}")
+
+second_response = agent_with_memory.run("Hi! What are our names?")
+print(f"second_response: {second_response}") 
+
+print(f"Conversation history: {agent_with_memory.memory.get_messages()}") 
+print(f"Trajectory: {agent_with_memory.trajectory.runs}")
 
 # # Re-initialize the LLM with the updated class
 # llm = LLM(model="gemma4:e4b")
