@@ -1,0 +1,3 @@
+# The application uses Python's standard library for HTTP and data handling.
+# This package loads the repository-local .env file.
+python-dotenv>=1.0.0
