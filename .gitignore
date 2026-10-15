@@ -34,3 +34,4 @@ dist/
 
 # custom one
 notebooks/
+tests/

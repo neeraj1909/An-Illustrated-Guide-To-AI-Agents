@@ -1,15 +1,13 @@
 import json
 import os
-import urllib.request
-from dataclasses import asdict 
 from pathlib import Path
 
 from dotenv import load_dotenv
 
 from agent import TinyAgent
 from llm import LLM
-from memory import Memory, TrimmingMemory, SummarizationMemory, RAGMemory
-from embeddings import EmbeddingModel 
+from memory import RAGMemory
+from embeddings import EmbeddingModel
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
@@ -23,7 +21,9 @@ llm = LLM(
 )
 
 # Initialize EmbeddingGemma
-embedding_model = EmbeddingModel(model="embeddinggemma")
+embedding_model = EmbeddingModel(
+    model=os.getenv("OLLAMA_EMBEDDING_MODEL", "embeddinggemma")
+)
 
 # RAGMemory with external documents
 documents = [
@@ -42,6 +42,20 @@ memory = RAGMemory(documents=documents, embedding_model=embedding_model)
 
 agent = TinyAgent(llm=llm, memory=memory)
 
-response = agent.run("What is Sarah's favorite animal?") 
+response = agent.run("What is Sarah's favorite animal?")
 print(f"Response: {response}\n")
-print(f"Summarized Conversation: {agent.memory.get_messages()}") 
+print(f"Summarized Conversation: {agent.memory.get_messages()}")
+print("Generation metrics:")
+print(json.dumps(llm.metrics_summary(), indent=2))
+print("Embedding metrics:")
+print(json.dumps(embedding_model.metrics_summary(), indent=2))
+print("RAG timing metrics:")
+print(
+    json.dumps(
+        {
+            "index": memory.index_metrics,
+            "last_search": memory.last_search_metrics,
+        },
+        indent=2,
+    )
+)

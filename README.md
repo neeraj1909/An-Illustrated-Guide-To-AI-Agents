@@ -114,6 +114,30 @@ What is 2 + 2?
 
 and prints the model response together with the agent trajectory.
 
+## Compare models and record timing
+
+The existing clients record timing and host information for every generation and embedding request. `main.py` prints a JSON summary after the RAG example. Select one generation model and one embedding model through environment variables, then repeat the same command for each pair:
+
+```bash
+mkdir -p results
+for embedding in embeddinggemma-2:270m-q8_0-text embeddinggemma:300m-qat-q4_0; do
+  for model in llama3.2:3b-instruct-q4_K_M qwen3:4b-instruct-2507-q4_K_M; do
+    for run in 1 2 3 4 5; do
+      OLLAMA_MODEL="$model" \
+      OLLAMA_EMBEDDING_MODEL="$embedding" \
+      LLM_BASE_URL="http://127.0.0.1:11434/v1" \
+      OLLAMA_BASE_URL="http://127.0.0.1:11434/v1" \
+      PYTHONPATH=src python src/illustrated_agents/main.py \
+        > "results/${model//\//_}_${embedding//\//_}_${run}.log"
+    done
+  done
+done
+```
+
+Run this command on the Mac Ollama host and again on the CPU host. Running it beside Ollama is necessary for the RAM, swap, CPU load, and process metrics to describe the inference machine. Keep the same model tag, quantization, prompt, documents, temperature, and Ollama version on both systems. Run each pair several times and compare the median and p95 `client_wall_ms`; the summary also includes process CPU time, maximum resident memory, available system memory before and after the request, swap used before and after, token counts, and tokens per second when token counts are returned by the endpoint. The `request_history` fields are available if you want to build a CSV or notebook analysis later.
+
+These numbers measure the current application path. `client_wall_ms` includes HTTP overhead. If the request goes through Open WebUI or across the network, it also includes proxy and network time; direct local Ollama URLs make the Mac-versus-CPU comparison meaningful. Ollama's native timing fields are preserved when an OpenAI-compatible endpoint returns them.
+
 The example uses `SummarizationMemory`, which replaces the accumulated conversation with a running system summary after each assistant response. `Memory` keeps the full conversation, while `TrimmingMemory` keeps the system message and the most recent two turns.
 
 Alternatively, run from the repository root with:
