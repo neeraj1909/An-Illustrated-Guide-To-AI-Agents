@@ -4,10 +4,12 @@ import os
 import platform
 import re
 import resource
+import socket
 import subprocess
 import sys
 import time
 import urllib.request
+from urllib.parse import urlparse
 
 
 def _sysctl_int(name: str) -> int | None:
@@ -84,6 +86,22 @@ def system_snapshot() -> dict:
         except (OSError, ValueError, IndexError, subprocess.SubprocessError):
             pass
     return snapshot
+
+
+def benchmark_context(base_url: str) -> dict:
+    """Identify where the benchmark process ran and where it sent requests."""
+    endpoint_host = urlparse(base_url).hostname
+    is_local_endpoint = endpoint_host in {"localhost", "127.0.0.1", "::1"}
+    return {
+        "benchmark_location": os.getenv(
+            "BENCHMARK_LOCATION", "local" if is_local_endpoint else "remote"
+        ),
+        "client_hostname": socket.gethostname(),
+        "client_platform": platform.platform(),
+        "endpoint": base_url,
+        "endpoint_host": endpoint_host,
+        "endpoint_is_local": is_local_endpoint,
+    }
 
 
 def request_metrics(
@@ -187,6 +205,7 @@ class LLM:
         self.think = think
         self.request_history: list[dict] = []
         self.last_metrics: dict = {}
+        self.run_context = benchmark_context(self.base_url)
 
     def generate(self, messages: list[dict], tools: list | None = None) -> Response:
         """Generate a response from the LLM given a list of messages."""
@@ -276,6 +295,7 @@ class LLM:
             if elapsed
             else None,
             "p95_client_wall_ms": round(p95, 3) if p95 is not None else None,
+            "run_context": self.run_context,
             "request_history": self.request_history,
             "last_request": self.last_metrics,
         }

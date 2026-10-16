@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "recorded_at_utc": "2026-10-15T13:31:44.880176+00:00",
+  "workload": {
+    "query": "What is Sarah's favorite animal?",
+    "document_count": 10
+  },
+  "run_context": {
+    "generation": {
+      "benchmark_location": "mac-m3x-server",
+      "client_hostname": "ubuntu-vm",
+      "client_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39",
+      "endpoint": "http://100.86.159.44:11434/v1",
+      "endpoint_host": "100.86.159.44",
+      "endpoint_is_local": false
+    },
+    "embedding": {
+      "benchmark_location": "mac-m3x-server",
+      "client_hostname": "ubuntu-vm",
+      "client_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39",
+      "endpoint": "http://100.86.159.44:11434/v1",
+      "endpoint_host": "100.86.159.44",
+      "endpoint_is_local": false
+    }
+  },
+  "generation": {
+    "model": "qwen3:4b-instruct-2507-q4_K_M",
+    "requests": 1,
+    "total_client_wall_ms": 1167.047,
+    "mean_client_wall_ms": 1167.047,
+    "p95_client_wall_ms": 1167.047,
+    "run_context": {
+      "benchmark_location": "mac-m3x-server",
+      "client_hostname": "ubuntu-vm",
+      "client_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39",
+      "endpoint": "http://100.86.159.44:11434/v1",
+      "endpoint_host": "100.86.159.44",
+      "endpoint_is_local": false
+    },
+    "request_history": [
+      {
+        "client_wall_ms": 1167.047,
+        "process_user_cpu_ms": 0.904,
+        "process_system_cpu_ms": 0.148,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.0478515625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5896380416,
+        "system_available_memory_after_bytes": 5914628096,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      }
+    ],
+    "last_request": {
+      "client_wall_ms": 1167.047,
+      "process_user_cpu_ms": 0.904,
+      "process_system_cpu_ms": 0.148,
+      "process_max_rss_bytes": 25559040,
+      "system_cpu_count": 8,
+      "system_load_1m_before": 2.13916015625,
+      "system_load_1m_after": 2.0478515625,
+      "system_total_memory_bytes": 12473614336,
+      "system_available_memory_before_bytes": 5896380416,
+      "system_available_memory_after_bytes": 5914628096,
+      "system_swap_used_before_bytes": 3054239744,
+      "system_swap_used_after_bytes": 3054239744,
+      "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+    }
+  },
+  "embedding": {
+    "model": "embeddinggemma",
+    "requests": 11,
+    "total_client_wall_ms": 2510.032,
+    "mean_client_wall_ms": 228.185,
+    "p95_client_wall_ms": 974.901,
+    "run_context": {
+      "benchmark_location": "mac-m3x-server",
+      "client_hostname": "ubuntu-vm",
+      "client_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39",
+      "endpoint": "http://100.86.159.44:11434/v1",
+      "endpoint_host": "100.86.159.44",
+      "endpoint_is_local": false
+    },
+    "request_history": [
+      {
+        "client_wall_ms": 974.901,
+        "process_user_cpu_ms": 40.388,
+        "process_system_cpu_ms": 1.834,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5900541952,
+        "system_available_memory_after_bytes": 5898772480,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 112.018,
+        "process_user_cpu_ms": 1.167,
+        "process_system_cpu_ms": 0.096,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5898772480,
+        "system_available_memory_after_bytes": 5898772480,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 142.072,
+        "process_user_cpu_ms": 0.14,
+        "process_system_cpu_ms": 1.006,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5898772480,
+        "system_available_memory_after_bytes": 5898268672,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 146.144,
+        "process_user_cpu_ms": 0.0,
+        "process_system_cpu_ms": 1.273,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5898268672,
+        "system_available_memory_after_bytes": 5898301440,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 155.505,
+        "process_user_cpu_ms": 1.096,
+        "process_system_cpu_ms": 0.029,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5898301440,
+        "system_available_memory_after_bytes": 5898080256,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 167.313,
+        "process_user_cpu_ms": 1.33,
+        "process_system_cpu_ms": 0.196,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5898080256,
+        "system_available_memory_after_bytes": 5898080256,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 194.83,
+        "process_user_cpu_ms": 2.715,
+        "process_system_cpu_ms": 1.058,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5898080256,
+        "system_available_memory_after_bytes": 5898080256,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 156.373,
+        "process_user_cpu_ms": 0.0,
+        "process_system_cpu_ms": 1.375,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5898080256,
+        "system_available_memory_after_bytes": 5898080256,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 122.4,
+        "process_user_cpu_ms": 1.151,
+        "process_system_cpu_ms": 0.017,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5898080256,
+        "system_available_memory_after_bytes": 5895782400,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 212.856,
+        "process_user_cpu_ms": 1.269,
+        "process_system_cpu_ms": 0.0,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5895782400,
+        "system_available_memory_after_bytes": 5896380416,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      },
+      {
+        "client_wall_ms": 125.62,
+        "process_user_cpu_ms": 1.128,
+        "process_system_cpu_ms": 0.012,
+        "process_max_rss_bytes": 25559040,
+        "system_cpu_count": 8,
+        "system_load_1m_before": 2.13916015625,
+        "system_load_1m_after": 2.13916015625,
+        "system_total_memory_bytes": 12473614336,
+        "system_available_memory_before_bytes": 5896380416,
+        "system_available_memory_after_bytes": 5896380416,
+        "system_swap_used_before_bytes": 3054239744,
+        "system_swap_used_after_bytes": 3054239744,
+        "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+      }
+    ],
+    "last_request": {
+      "client_wall_ms": 125.62,
+      "process_user_cpu_ms": 1.128,
+      "process_system_cpu_ms": 0.012,
+      "process_max_rss_bytes": 25559040,
+      "system_cpu_count": 8,
+      "system_load_1m_before": 2.13916015625,
+      "system_load_1m_after": 2.13916015625,
+      "system_total_memory_bytes": 12473614336,
+      "system_available_memory_before_bytes": 5896380416,
+      "system_available_memory_after_bytes": 5896380416,
+      "system_swap_used_before_bytes": 3054239744,
+      "system_swap_used_after_bytes": 3054239744,
+      "system_platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39"
+    }
+  },
+  "rag": {
+    "index": {
+      "document_count": 10,
+      "index_wall_ms": 2391.042
+    },
+    "last_search": {
+      "query_wall_ms": 128.691,
+      "embedding_wall_ms": 125.62,
+      "document_count": 10,
+      "top_k": 3
+    }
+  },
+  "response": "Sarah's favorite animal is flamingos."
+}

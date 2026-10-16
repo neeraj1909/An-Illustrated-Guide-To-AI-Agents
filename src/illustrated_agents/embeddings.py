@@ -6,7 +6,7 @@ import urllib.request
 from pathlib import Path
 
 from dotenv import load_dotenv
-from llm import request_metrics, system_snapshot
+from llm import benchmark_context, request_metrics, system_snapshot
 
 
 load_dotenv(Path(__file__).resolve().parents[2] / ".env")
@@ -25,6 +25,7 @@ class EmbeddingModel:
         self.base_url = self.base_url.rstrip("/")
         self.request_history: list[dict] = []
         self.last_metrics: dict = {}
+        self.run_context = benchmark_context(self.base_url)
 
     def embed(self, text: str) -> list[float]:
         request = urllib.request.Request(
@@ -66,6 +67,7 @@ class EmbeddingModel:
             if elapsed
             else None,
             "p95_client_wall_ms": round(p95, 3) if p95 is not None else None,
+            "run_context": self.run_context,
             "request_history": self.request_history,
             "last_request": self.last_metrics,
         }
